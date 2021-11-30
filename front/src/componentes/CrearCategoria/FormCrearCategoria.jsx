@@ -4,10 +4,12 @@ import Store from "../../comunes/Store";
 
 const FormCrearCategoria = () => {
   const formRef = useRef(null);
+
   const {
     dispatch,
     state: { categoria },
   } = useContext(Store);
+
   const item = categoria.item;
   const [state, setState] = useState(item);
   const vsExprReg = /[A-Za-z0-9_]/;
@@ -15,14 +17,14 @@ const FormCrearCategoria = () => {
   const onAdd = (event) => {
     event.preventDefault();
 
-		const request = {
-			name: state.name,
-			id: null,
-		};
+    const request = {
+      group: state.group,
+      id: null,
+    };
 
-    if (vsExprReg.test(request.name)) {
-      document.querySelector(".alertTask").innerHTML = "";
-      fetch(HOST_API + "/category", {
+    if (vsExprReg.test(request.group)) {
+      // document.querySelector(".alertTask").innerHTML = "";
+      fetch(HOST_API + "/categoria", {
         method: "POST",
         body: JSON.stringify(request),
         headers: {
@@ -31,7 +33,7 @@ const FormCrearCategoria = () => {
       })
         .then((response) => response.json())
         .then((category) => {
-          dispatch({ type: "add-category", item: categoria });
+          dispatch({ type: "add-category", item: category });
           setState({ name: "" });
           formRef.current.reset();
         });
@@ -43,23 +45,25 @@ const FormCrearCategoria = () => {
 
   return (
     <div>
-      <input
-        type="text"
-        name="name"
-        className="form-control me-2"
-        placeholder="Escriba aqui..."
-        defaultValue={item.name}
-        onChange={(event) => {
-          setState({ ...state, name: event.target.value });
-        }}
-      />
-      <button
-        className="btn btn-success"
-        onClick={onAdd}
-        disabled={!state.name}
-      >
-        Nueva Lista
-      </button>
+      <form ref={formRef}>
+        <input
+          type="text"
+          name="name"
+          className="form-control me-2"
+          placeholder="Escribe la nueva categoria"
+          defaultValue={item.name}
+          onChange={(event) => {
+            setState({ ...state, group: event.target.value });
+          }}
+        />
+        <button
+          className="btn btn-success"
+          onClick={onAdd}
+          disabled={!state.group}
+        >
+          Nueva Categoria
+        </button>
+      </form>
     </div>
   );
 };

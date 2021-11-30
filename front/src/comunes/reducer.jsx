@@ -1,8 +1,8 @@
 function reducer(state, action) {
   switch (action.type) {
     case "update-category":
-      const categoryUpdateList = state.categoria;
-      categoryUpdateList.categoriaList = action.categoriaList;
+      const categoryUpdateList = state.categoria.categoriaList;
+      categoryUpdateList.categoriaList = action.category;
       return { ...state, categoria: categoryUpdateList };
     case "add-category":
       const newCategoryList = state.categoria.categoriaList;
@@ -12,7 +12,7 @@ function reducer(state, action) {
         categoria: { categoriaList: newCategoryList, item: {} },
       };
     case "delete-category":
-      const categoryDeleteItem = state.task;
+      const categoryDeleteItem = state.categoria;
       const categoryListUpdate = categoryDeleteItem.categoriaList.filter((item) => {
         return item.id !== action.id;
       });

@@ -8,10 +8,9 @@ export const ListaTodo = (categoriaListId) => {
     state: { todo },
   } = useContext(Store);
 
-	const currentList = todo.todoList.filter(todo => {
-		return todo.idList === categoriaListId.categoriaListId;
+	const currentList = todo.list.filter(todo => {
+		return todo.id_category === categoriaListId.categoriaListId;
 	});  
-
 
 
   useEffect(() => {
@@ -35,11 +34,14 @@ export const ListaTodo = (categoriaListId) => {
   };
 
   const onChange = (event, todo) => {
+
     const request = {
       name: todo.name,
       id: todo.id,
       completed: event.target.checked,
-    };
+      category: categoriaListId.categoriaListId,
+    };    
+
     fetch(HOST_API + "/todo", {
       method: "PUT",
       body: JSON.stringify(request),
@@ -47,9 +49,11 @@ export const ListaTodo = (categoriaListId) => {
         "Content-Type": "application/json",
       },
     })
+      
       .then((response) => response.json())
       .then((todo) => {
         dispatch({ type: "update-item", item: todo });
+
       });
   };
 

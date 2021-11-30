@@ -2,8 +2,10 @@ import React,{useRef,useContext,useState} from 'react';
 import HOST_API from "../../comunes/conexion"
 import Store from "../../comunes/Store"
 
-export const CrearCategoria = () => {
+const CrearCategoria = (CrearCategoriaId) => {
+
     const formRef = useRef(null);
+
     const {
       dispatch,
       state: { todo },
@@ -17,8 +19,11 @@ export const CrearCategoria = () => {
       const request = {
         name: state.name,
         id: null,
-        completed: false,
+        completed: false,  
+        id_category: CrearCategoriaId.CrearCategoriaId,    
       };
+
+      alert("Desde FormPorCategoria este es el id enviado: " + request.id_category)
   
       fetch(HOST_API + "/todo", {
         method: "POST",
