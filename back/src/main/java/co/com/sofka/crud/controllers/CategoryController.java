@@ -12,17 +12,17 @@ public class CategoryController {
     @Autowired
     private CategoryService service;
 
-    @GetMapping(value="api/todos")
+    @GetMapping(value="api/categoryList")
     public Iterable<Category> list(){
         return  service.list();
     }
 
-    @PostMapping(value = "api/todo")
+    @PostMapping(value = "api/category")
     public Category save(@RequestBody Category category){
         return service.save(category);
     }
 
-    @PutMapping(value = "api/todo")
+    @PutMapping(value = "api/category")
     public Category update(@RequestBody Category category){
         if(category.getId() != null){
             return service.save(category);
@@ -30,12 +30,12 @@ public class CategoryController {
         throw new RuntimeException("No existe el id para actualziar");
     }
 
-    @DeleteMapping(value = "api/{id}/todo")
+    @DeleteMapping(value = "api/{id}/category")
     public void delete(@PathVariable("id")Long id){
         service.delete(id);
     }
 
-    @GetMapping(value = "api/{id}/todo")
+    @GetMapping(value = "api/{id}/category")
     public Category get(@PathVariable("id") Long id){
         return service.get(id);
     }
