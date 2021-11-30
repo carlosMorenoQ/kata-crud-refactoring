@@ -1,24 +1,32 @@
-package co.com.sofka.crud;
+package co.com.sofka.crud.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name="tab_list")
 public class Todo {
-    @Id
-    @GeneratedValue
-    private Long id;
-    private String name;
-    private boolean completed;
-    private String groupListId;
 
-    public String getGroupListId() {
-        return groupListId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
+    private Long id;
+
+    @Column(name="name")
+    private String name;
+
+    @Column(name="completed")
+    private boolean completed;
+
+    @ManyToOne
+    @JoinColumn(name="id_category")
+    private Category category;
+
+    public Category getCategory() {
+        return category;
     }
 
-    public void setGroupListId(String groupListId) {
-        this.groupListId = groupListId;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public Long getId() {
